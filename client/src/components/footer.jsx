@@ -1,6 +1,10 @@
+import './footer.css';
+
 function Footer() {
     return(
-        <div>This is a footer</div>
+        <div className='footer'>
+            <label>Organika by Edgar</label>
+        </div>
     )
 }
 
