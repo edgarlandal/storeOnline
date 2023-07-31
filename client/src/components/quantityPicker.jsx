@@ -1,25 +1,24 @@
 import { useState } from "react";
 
+
 import './quantityPicker.css';
 
 
-function QuantityPicker() {
+function QuantityPicker({handleClick}) {
 
     let [count, setCount] = useState(1);
     
     function increase() {
-        console.log("increase");
         let value = count + 1;  
-        setCount(value);
-
-        
+        setCount(value);   
+        handleClick(value);     
     }
 
     function decrease(){
-        console.log("decrease");
         let value = count - 1;  
         if (count === 1) return;
         setCount(value);
+        handleClick(value);
     }
     return (
         <div className="qt-picker">
