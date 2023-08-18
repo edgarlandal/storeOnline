@@ -17,8 +17,8 @@ function Products({product}) {
             <img src={product.src} alt={product.title} />
             <h5>{[product.title]}</h5>
             <div className="prices">
-                <label>Prices: <span>{product.price}</span></label>
-                <label>Total: <span>{(product.price * count)}</span></label>
+                <label>Prices: <span>{product.price.toFixed(2)}</span></label>
+                <label>Total: <span>{(product.price * count).toFixed(2)}</span></label>
             </div>
             <QuantityPicker handleClick={handleClick}/>
         </div>
