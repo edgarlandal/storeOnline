@@ -2,7 +2,7 @@ import './navBar.css';
 
 function NavBar() {
     return(
-        <div>Menu goes here !!!</div>
+        <div className='nav'>Menu goes here !!!</div>
     );
 }
 

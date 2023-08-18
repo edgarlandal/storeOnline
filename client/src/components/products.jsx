@@ -8,8 +8,6 @@ function Products({product}) {
 
     const handleClick = num => {
         setCount(num);
-
-        console.log('argument from child'  + num);
     }
 
     return (
