@@ -1,5 +1,5 @@
-from flask import Flask
-from config import me
+from flask import Flask, request, abort
+from config import me, db
 import json
 
 app = Flask("server")
@@ -36,8 +36,47 @@ def get_name():
 
 @app.get("/api/categories")
 def categories():
-    all_cats = ["fruits", "vegetables", "dairy & eggs"]
+    all_cats = []
+    cursor = db.products.find({})
+
+    for product in cursor:
+        category = product["category"]
+        if category not in all_cats:
+            all_cats.append(category)
     return json.dumps(all_cats)
+
+
+def fix_id(record):
+    record["_id"] = str(record["_id"])
+    return record
+
+
+@app.get("/api/products")
+def get_products():
+    products = []
+    cursor = db.products.find({})
+
+    for product in cursor:
+        products.append(fix_id(product))
+    return json.dumps(products)
+
+
+@app.post("/api/products")
+def save_products():
+    products = request.get_json()
+    db.products.insert_one(products)
+    return json.dumps(fix_id(products))
+
+
+@app.get("/api/products/category/<cat>")
+def get_by_category(cat):
+    products = []
+    cursor = db.products.find({"category": cat})
+
+    for prod in cursor:
+        products.append(fix_id(prod))
+
+    return json.dumps(products)
 
 
 # start the server
