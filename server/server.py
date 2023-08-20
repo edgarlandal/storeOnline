@@ -79,5 +79,17 @@ def get_by_category(cat):
     return json.dumps(products)
 
 
+@app.get("/api/products/count")
+def get_num_products():
+    products = []
+    cursor = db.products.find({})
+    i = 0
+    for prod in cursor:
+        products.append(fix_id(prod))
+        i += 1
+
+    return json.dumps(i)
+
+
 # start the server
 app.run(debug=True)
