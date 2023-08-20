@@ -21,7 +21,7 @@ import "./catalog.css";
 function Catalog() {
   const [products, setProducts] = useState([]);
   const [categorys, setCategorys] = useState([]);
-  const [prodsToDis, setProdsToDis] = useState([]);
+  // const [prodsToDis, setProdsToDis] = useState([]);
 
   useEffect(() => {
     loadCatalog();
@@ -31,7 +31,7 @@ function Catalog() {
     let service = new DataService();
     let prods = service.getProducts();
     setProducts(prods);
-    setProdsToDis(prods)
+    setProdsToDis(prods);
 
     // here on the load of the page i want to create the categories
 
@@ -39,17 +39,17 @@ function Catalog() {
     setCategorys(cats);
   };
 
-  const filter = (caty) => {    
-    let list = []
+  const filter = (caty) => {
+    let list = [];
 
     products.forEach((p) => {
       if (p.category === caty) {
-        list.push(p)
+        list.push(p);
       }
-    })
+    });
 
-    setProdsToDis(list)
-  }
+    setProdsToDis(list);
+  };
 
   return (
     <div className="catalog">
@@ -57,14 +57,19 @@ function Catalog() {
       <br />
 
       {categorys.map((category, i) => (
-        <button key ={i} onClick={() => {filter(category)}} className="btn btn-sm btn-primary btn-filter">
+        <button
+          key={i}
+          onClick={() => {
+            filter(category);
+          }}
+          className="btn btn-sm btn-primary btn-filter"
+        >
           {category}
         </button>
       ))}
 
       <br />
       {prodsToDis.map((product, i) => (
-
         <Products product={product} key={i} />
       ))}
     </div>
