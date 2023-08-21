@@ -1,6 +1,9 @@
 .about {
-  padding-top: 150px;
-  background-color: #fae392;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(181, 193, 189);
 }
 
 .about > h1,

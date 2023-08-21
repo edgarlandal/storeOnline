@@ -9,6 +9,7 @@
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
+  background-color: beige;
   box-shadow: 1px 1px 15px rgb(0, 0, 1.5);
   padding: 10px;
 }

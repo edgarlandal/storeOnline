@@ -1,5 +1,16 @@
 .admin {
-  min-height: 500px;
-  padding-top: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   background-color: rgb(181, 193, 189);
+}
+
+.parent-container {
+  padding: 20px;
+  margin: 20px;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 1px 1px 1px black;
+  width: 400px;
 }

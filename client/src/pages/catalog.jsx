@@ -54,8 +54,16 @@ function Catalog() {
   return (
     <div className="catalog page">
       <h1>Check out our amazing catalog</h1>
+      <h3> Total of products: {prodsToDis.length}</h3>
       <br />
-
+      <button
+        className="btn btn-sm btn-dark"
+        onClick={() => {
+          setProdsToDis(products);
+        }}
+      >
+        All
+      </button>
       {categorys.map((category, i) => (
         <button
           key={i}

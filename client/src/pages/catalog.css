@@ -1,5 +1,6 @@
 .catalog {
-  padding: 10px;
+  text-align: center;
+  background-color: rgb(181, 193, 189);
 }
 
 .catalog > h1 {

@@ -1,12 +1,7 @@
-.home {
+.contact {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: rgb(181, 193, 189);
-}
-
-.home > h1,
-h5 {
-  text-shadow: 5px 15px 15px black;
 }

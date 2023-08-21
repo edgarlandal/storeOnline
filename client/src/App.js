@@ -18,6 +18,7 @@ import Home from "./pages/home";
 import About from "./pages/about";
 import Cart from "./pages/cart";
 import Admin from "./pages/admin";
+import Contact from "./pages/contact";
 
 /**
  *  React imports
@@ -35,6 +36,7 @@ function App() {
         <Route path="/store" element={<Catalog />}></Route>
         <Route path="/cart" element={<Cart />}></Route>
         <Route path="/admin" element={<Admin />}></Route>
+        <Route path="/contact" element={<Contact />}></Route>
       </Routes>
 
       <Footer />
