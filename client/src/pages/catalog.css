@@ -1,0 +1,7 @@
+.catalog {
+  padding: 10px;
+}
+
+.catalog > h1 {
+  text-shadow: 5px 5px 15px black;
+}

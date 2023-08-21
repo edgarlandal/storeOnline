@@ -21,7 +21,7 @@ import "./catalog.css";
 function Catalog() {
   const [products, setProducts] = useState([]);
   const [categorys, setCategorys] = useState([]);
-  // const [prodsToDis, setProdsToDis] = useState([]);
+  const [prodsToDis, setProdsToDis] = useState([]);
 
   useEffect(() => {
     loadCatalog();
@@ -52,7 +52,7 @@ function Catalog() {
   };
 
   return (
-    <div className="catalog">
+    <div className="catalog page">
       <h1>Check out our amazing catalog</h1>
       <br />
 

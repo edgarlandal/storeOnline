@@ -1,0 +1,8 @@
+.home {
+  padding-top: 190px;
+}
+
+.home > h1,
+h5 {
+  text-shadow: 5px 15px 15px black;
+}

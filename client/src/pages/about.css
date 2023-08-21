@@ -1,0 +1,9 @@
+.about {
+  padding-top: 150px;
+  background-color: #fae392;
+}
+
+.about > h1,
+h5 {
+  text-shadow: 5px 15px 15px black;
+}
