@@ -5,13 +5,16 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 import { BrowserRouter } from "react-router-dom";
+import GlobalState from "./store/globalState";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <GlobalState>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </GlobalState>
   </React.StrictMode>
 );
 

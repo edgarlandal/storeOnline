@@ -1,3 +1,6 @@
 .cart {
-  padding-top: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
