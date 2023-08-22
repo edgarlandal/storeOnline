@@ -1,17 +1,20 @@
 import { useState, useEffect } from "react";
 import DataContext from "./dataContext";
+import DataService from "../services/dataServices";
 
 function GlobalState(props) {
   const [cart, setCart] = useState([]);
   const [user, setUser] = useState({});
+
+  let service = new DataService();
+  let prods = service.getProducts();
+  const [productsGlobal, setProductGlobal] = useState(prods);
 
   useEffect(() => {
     setUser({ name: "Edgar", id: 12, email: "mlanda@uabc.edu.mx" });
   }, []);
 
   const addToCart = (prod) => {
-    console.log("global add");
-
     let copy = [...cart];
 
     let isExist = false;
@@ -29,17 +32,19 @@ function GlobalState(props) {
   };
 
   const removeFromCart = (prod) => {
-    console.log("global remove");
-
     let cpy = [...cart];
 
     let newCart = cpy.filter((c) => {
       return c._id !== prod._id ? true : false;
     });
 
-    console.log(newCart);
-
     setCart(newCart);
+  };
+
+  const addNewProduct = (prod) => {
+    let copy = [...productsGlobal];
+    copy.push(prod);
+    setProductGlobal(copy);
   };
 
   return (
@@ -47,8 +52,10 @@ function GlobalState(props) {
       value={{
         cart: cart,
         user: user,
+        prods: productsGlobal,
         addToCart: addToCart,
         removeFromCart: removeFromCart,
+        addNewProduct: addNewProduct,
       }}
     >
       {props.children}

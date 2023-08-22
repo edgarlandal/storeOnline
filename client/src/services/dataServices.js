@@ -48,6 +48,10 @@ class DataService {
   getProducts = () => {
     return this.catalog;
   };
+
+  setProduct = (prod) => {
+    this.catalog.push(prod);
+  };
 }
 
 export default DataService;

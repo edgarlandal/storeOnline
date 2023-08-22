@@ -1,7 +1,7 @@
 /**
  * React Imports
  */
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 
 /**
  * Components Imports
@@ -11,7 +11,7 @@ import Products from "../components/products";
 /**
  * Data Imports
  */
-import DataService from "../services/dataServices";
+import DataContext from "../store/dataContext";
 
 /**
  * Styles Imports
@@ -23,13 +23,13 @@ function Catalog() {
   const [categorys, setCategorys] = useState([]);
   const [prodsToDis, setProdsToDis] = useState([]);
 
+  const prods = useContext(DataContext).prods;
+
   useEffect(() => {
     loadCatalog();
   }, []);
 
   const loadCatalog = () => {
-    let service = new DataService();
-    let prods = service.getProducts();
     setProducts(prods);
     setProdsToDis(prods);
 

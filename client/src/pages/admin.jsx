@@ -1,7 +1,13 @@
 import React, { useState } from "react";
+
+import { useContext } from "react";
+import DataContext from "../store/dataContext";
+
 import "./admin.css";
 function Admin() {
   const [product, setProduct] = useState({});
+
+  const addNewProduct = useContext(DataContext).addNewProduct;
 
   const saveProduct = () => {
     var count = 0;
@@ -15,6 +21,7 @@ function Admin() {
         console.log("Faltan campos");
       } else {
         console.log("Completo");
+        addNewProduct({ ...product, _id: 0 });
       }
     }
   };
@@ -53,7 +60,9 @@ function Admin() {
           <input
             className="form-control"
             type="number"
-            onChange={(e) => setProduct({ ...product, price: e.target.value })}
+            onChange={(e) =>
+              setProduct({ ...product, price: parseInt(e.target.value) })
+            }
           />
         </div>
         <div>
