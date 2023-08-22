@@ -1,6 +1,24 @@
 .product {
-  border: 1px solid #7c7979;
-  border-radius: 5px;
-  padding: 5px;
-  margin: 10px 20px;
+  display: flex;
+  justify-content: space-around;
+  border-radius: 10;
+  box-shadow: 2px 2px 5px black;
+  margin: 10px;
+  padding: 10px;
+  min-width: 600px;
+  background-color: wheat;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.product > img {
+  width: 100px;
+  height: 100px;
+  padding: 10px;
+  margin: 10px;
 }
