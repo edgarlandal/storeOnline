@@ -1,6 +1,7 @@
 from flask import Flask, request, abort
 from config import me, db
 import json
+import bson
 
 app = Flask("server")
 
@@ -79,6 +80,25 @@ def get_by_category(cat):
     return json.dumps(products)
 
 
+@app.get("/api/products/id/<id>")
+def get_produtcs_by_id(id):
+    if not bson.ObjectId.is_valid(id):
+        return abort(
+            400,
+            "Invalid ID",
+        )
+
+    db_id = bson.ObjectId(id)
+    product = db.products.find_one({"_id": db_id})
+    if not product:
+        return abort(
+            404,
+            "Product not found",
+        )
+
+    return json.dumps(fix_id(product))
+
+
 @app.get("/api/products/count")
 def get_num_products():
     products = []
@@ -89,6 +109,75 @@ def get_num_products():
         i += 1
 
     return json.dumps(i)
+
+
+@app.get("/api/reports/total")
+def report_total():
+    total = 0
+    cursor = db.products.find({})
+
+    for prod in cursor:
+        total += prod["prices"]
+
+    return json.dumps(f"The total value is ${total}")
+
+
+@app.get("/api/coupons")
+def get_coupons():
+    coupons = []
+    cursor = db.coupons.find({})
+
+    for c in cursor:
+        coupons.append(fix_id(c))
+    return json.dumps(coupons)
+
+
+@app.post("/api/coupons")
+def set_coupons():
+    coupon = request.get_json()
+
+    if not "code" in coupon:
+        return abort(400, "Code is required")
+
+    if not "discount" in coupon:
+        return abort(400, "Discount is required")
+
+    if coupon["discount"] > 35:
+        return abort(400, "Discount is not valid")
+
+    db.coupons.insert_one(coupon)
+    return json.dumps(fix_id(coupon))
+
+
+@app.get("/api/coupons/<code>")
+def get_coupon_code(code):
+    coupon = db.coupons.find_one({"code": code})
+    if not coupon:
+        return abort(
+            404,
+            "Coupon not found",
+        )
+
+    return json.dumps(fix_id(coupon))
+
+
+@app.get("/api/coupons/id/<id>")
+def get_coupon_by_id(id):
+    if not bson.ObjectId.is_valid(id):
+        return abort(
+            400,
+            "Invalid ID",
+        )
+
+    db_id = bson.ObjectId(id)
+    coupon = db.coupons.find_one({"_id": db_id})
+    if not coupon:
+        return abort(
+            404,
+            "Coupon not found",
+        )
+
+    return json.dumps(fix_id(coupon))
 
 
 # start the server
