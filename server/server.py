@@ -80,6 +80,28 @@ def get_by_category(cat):
     return json.dumps(products)
 
 
+@app.get("/api/products/price/<price>")
+def get_by_prices(price):
+    products = []
+    cursor = db.products.find({"price": price})
+
+    for prod in cursor:
+        products.append(fix_id(prod))
+
+    return json.dumps(products)
+
+
+@app.get("/api/products/title/<title>")
+def get_by_title(title):
+    products = []
+    cursor = db.products.find({"title": title})
+
+    for prod in cursor:
+        products.append(fix_id(prod))
+
+    return json.dumps(products)
+
+
 @app.get("/api/products/id/<id>")
 def get_produtcs_by_id(id):
     if not bson.ObjectId.is_valid(id):
