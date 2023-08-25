@@ -83,7 +83,7 @@ def get_by_category(cat):
 @app.get("/api/products/price/<price>")
 def get_by_prices(price):
     products = []
-    cursor = db.products.find({"price": price})
+    cursor = db.products.find({"price": float(price)})
 
     for prod in cursor:
         products.append(fix_id(prod))
