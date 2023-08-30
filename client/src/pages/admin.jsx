@@ -1,13 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-import { useContext } from "react";
-import DataContext from "../store/dataContext";
+// import { useContext } from "react";
+// import DataContext from "../store/dataContext";
 
 import "./admin.css";
-function Admin() {
-  const [product, setProduct] = useState({});
+import DataService from "../services/dataServices";
 
-  const addNewProduct = useContext(DataContext).addNewProduct;
+function Admin() {
+  const [product, setProduct] = useState({
+    title: "",
+    category: "",
+    img: "",
+    price: "",
+  });
+
+  const [allProducts, setAllProducts] = useState([]);
+
+  useEffect(() => {
+    loadData();
+  }, [product]);
+
+  const loadData = async () => {
+    let service = new DataService();
+    const prods = await service.getProducts();
+    setAllProducts(prods);
+  };
+
+  const clearForm = () => {
+    setProduct({ title: "", category: "", img: "", price: "" });
+  };
 
   const saveProduct = () => {
     var count = 0;
@@ -18,22 +39,29 @@ function Admin() {
         }
       }
       if (count !== 4) {
-        console.log("Faltan campos");
+        alert("Faltan campos");
       } else {
-        console.log("Completo");
-        addNewProduct({ ...product, _id: 0 });
+        alert("Completo");
+
+        console.log(product);
+
+        let service = new DataService();
+        service.setProduct(product);
       }
     }
+    clearForm();
   };
   return (
     <div className="admin page">
       <h1>Store Managment</h1>
+      <br />
       <div className="parent-container">
         <div className="mb-3">
           <label className="form-label">Title</label>
           <input
             className="form-control"
             type="text"
+            value={product.title}
             onChange={(e) => setProduct({ ...product, title: e.target.value })}
           />
         </div>
@@ -42,6 +70,7 @@ function Admin() {
           <input
             className="form-control"
             type="text"
+            value={product.category}
             onChange={(e) =>
               setProduct({ ...product, category: e.target.value })
             }
@@ -52,6 +81,7 @@ function Admin() {
           <input
             className="form-control"
             type="text"
+            value={product.img}
             onChange={(e) => setProduct({ ...product, img: e.target.value })}
           />
         </div>
@@ -60,8 +90,10 @@ function Admin() {
           <input
             className="form-control"
             type="number"
+            min={0}
+            value={product.price}
             onChange={(e) =>
-              setProduct({ ...product, price: parseInt(e.target.value) })
+              setProduct({ ...product, price: parseFloat(e.target.value) })
             }
           />
         </div>
@@ -70,6 +102,25 @@ function Admin() {
             Save Product
           </button>
         </div>
+      </div>
+      <div
+        className="card"
+        style={{ width: "20rem", boxShadow: "2px 2px 2px black" }}
+      >
+        <div className="card-header">Products</div>
+        <ul className="list-group list-group-flush">
+          {allProducts.map((p, i) => (
+            <li key={i} className="list-group-item">
+              <div className="d-flex justify-content-between">
+                <label>
+                  {p.title} :
+                  <span style={{ fontWeight: "bold" }}>{p.price}</span>
+                </label>
+                <button className="btn btn-danger">Delete</button>
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );

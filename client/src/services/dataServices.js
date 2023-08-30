@@ -1,3 +1,5 @@
+import axios from "axios";
+
 class DataService {
   catalog = [
     {
@@ -44,14 +46,29 @@ class DataService {
       _id: "6",
     },
   ];
+  urlAPI = "http://127.0.0.1:5000";
 
-  getProducts = () => {
-    return this.catalog;
-  };
+  async getProducts() {
+    const response = await axios.get(this.urlAPI + "/api/products");
+    return response.data;
+  }
 
-  setProduct = (prod) => {
-    this.catalog.push(prod);
-  };
+  async getProductsByCat(caty) {
+    const response = await axios.get(
+      this.urlAPI + "/api/products/category/" + caty
+    );
+    return response.data;
+  }
+
+  async getCategories() {
+    const response = await axios.get(this.urlAPI + "/api/categories");
+    return response.data;
+  }
+
+  async setProduct(prod) {
+    const response = await axios.post(this.urlAPI + "/api/products", prod);
+    return response;
+  }
 }
 
 export default DataService;

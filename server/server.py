@@ -3,7 +3,11 @@ from config import me, db
 import json
 import bson
 
+from flask_cors import CORS
+
 app = Flask("server")
+
+CORS(app=app)
 
 
 @app.get("/")

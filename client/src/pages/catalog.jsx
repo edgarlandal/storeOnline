@@ -1,7 +1,7 @@
 /**
  * React Imports
  */
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 
 /**
  * Components Imports
@@ -11,44 +11,42 @@ import Products from "../components/products";
 /**
  * Data Imports
  */
-import DataContext from "../store/dataContext";
+// import DataContext from "../store/dataContext";
 
 /**
  * Styles Imports
  */
 import "./catalog.css";
+import DataService from "../services/dataServices";
 
 function Catalog() {
   const [products, setProducts] = useState([]);
-  const [categorys, setCategorys] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [prodsToDis, setProdsToDis] = useState([]);
 
-  const prods = useContext(DataContext).prods;
+  // const prods = useContext(DataContext).prods;
 
   useEffect(() => {
     loadCatalog();
   }, []);
 
-  const loadCatalog = () => {
+  const loadCatalog = async () => {
+    let service = new DataService();
+    let prods = await service.getProducts();
+
     setProducts(prods);
     setProdsToDis(prods);
 
     // here on the load of the page i want to create the categories
 
-    let cats = ["Fruit", "Vegetable"];
-    setCategorys(cats);
+    let cats = await service.getCategories();
+    setCategories(cats);
   };
 
-  const filter = (caty) => {
-    let list = [];
-
-    products.forEach((p) => {
-      if (p.category === caty) {
-        list.push(p);
-      }
-    });
-
-    setProdsToDis(list);
+  const filter = async (caty) => {
+    let service = new DataService();
+    let prods = await service.getProductsByCat(caty);
+    setProdsToDis(prods);
   };
 
   return (
@@ -64,7 +62,7 @@ function Catalog() {
       >
         All
       </button>
-      {categorys.map((category, i) => (
+      {categories.map((category, i) => (
         <button
           key={i}
           onClick={() => {
