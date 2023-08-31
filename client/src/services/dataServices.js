@@ -47,9 +47,12 @@ class DataService {
     },
   ];
   urlAPI = "http://127.0.0.1:5000";
+  products = "/api/products";
+  categories = "/api/categories";
+  coupon = "/api/coupons";
 
   async getProducts() {
-    const response = await axios.get(this.urlAPI + "/api/products");
+    const response = await axios.get(this.urlAPI + this.products);
     return response.data;
   }
 
@@ -61,12 +64,22 @@ class DataService {
   }
 
   async getCategories() {
-    const response = await axios.get(this.urlAPI + "/api/categories");
+    const response = await axios.get(this.urlAPI + this.categories);
     return response.data;
   }
 
   async setProduct(prod) {
-    const response = await axios.post(this.urlAPI + "/api/products", prod);
+    const response = await axios.post(this.urlAPI + this.products, prod);
+    return response;
+  }
+
+  async deleteProduct(id) {
+    const response = await axios.delete(this.urlAPI + this.products + "/" + id);
+    return response;
+  }
+
+  async setCoupon(coupon) {
+    const response = await axios.post(this.urlAPI + this.coupon, coupon);
     return response;
   }
 }

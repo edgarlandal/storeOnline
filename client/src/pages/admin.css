@@ -1,6 +1,6 @@
 .admin {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: rgb(181, 193, 189);

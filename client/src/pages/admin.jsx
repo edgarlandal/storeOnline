@@ -14,6 +14,11 @@ function Admin() {
     price: "",
   });
 
+  const [coupon, setCoupon] = useState({
+    code: "",
+    discount: "",
+  });
+
   const [allProducts, setAllProducts] = useState([]);
 
   useEffect(() => {
@@ -30,6 +35,15 @@ function Admin() {
     setProduct({ title: "", category: "", img: "", price: "" });
   };
 
+  const removeProduct = (id) => {
+    let service = new DataService();
+    service.deleteProduct(id);
+
+    let cpy = allProducts.filter((prod) => prod._id !== id);
+
+    setAllProducts(cpy);
+  };
+
   const saveProduct = () => {
     var count = 0;
     if (Object.keys(product) !== 0) {
@@ -43,18 +57,21 @@ function Admin() {
       } else {
         alert("Completo");
 
-        console.log(product);
-
         let service = new DataService();
         service.setProduct(product);
       }
     }
     clearForm();
   };
+
+  const saveCoupon = () => {
+    const service = new DataService();
+    console.log(coupon);
+    service.setCoupon(coupon);
+  };
   return (
     <div className="admin page">
       <h1>Store Managment</h1>
-      <br />
       <div className="parent-container">
         <div className="mb-3">
           <label className="form-label">Title</label>
@@ -102,25 +119,63 @@ function Admin() {
             Save Product
           </button>
         </div>
+        <div
+          className="card"
+          style={{
+            width: "100%",
+            boxShadow: "2px 2px 2px black",
+            marginTop: "10px",
+          }}
+        >
+          <div className="card-header">Products</div>
+          <ul className="list-group list-group-flush">
+            {allProducts.map((p, i) => (
+              <li key={i} className="list-group-item">
+                <div className="d-flex justify-content-between">
+                  <label>
+                    {p.title} :
+                    <span style={{ fontWeight: "bold" }}>{p.price}</span>
+                  </label>
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => {
+                      removeProduct(p._id);
+                    }}
+                  >
+                    Delete
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
-      <div
-        className="card"
-        style={{ width: "20rem", boxShadow: "2px 2px 2px black" }}
-      >
-        <div className="card-header">Products</div>
-        <ul className="list-group list-group-flush">
-          {allProducts.map((p, i) => (
-            <li key={i} className="list-group-item">
-              <div className="d-flex justify-content-between">
-                <label>
-                  {p.title} :
-                  <span style={{ fontWeight: "bold" }}>{p.price}</span>
-                </label>
-                <button className="btn btn-danger">Delete</button>
-              </div>
-            </li>
-          ))}
-        </ul>
+      <div className="parent-container">
+        <div className="mb-3">
+          <label className="form-label">Code</label>
+          <input
+            className="form-control"
+            type="text"
+            value={coupon.code}
+            onChange={(e) => setCoupon({ ...coupon, code: e.target.value })}
+          />
+        </div>
+        <div className="mb-3">
+          <label className="form-label">Discount</label>
+          <input
+            className="form-control"
+            type="number"
+            value={coupon.desc}
+            onChange={(e) =>
+              setCoupon({ ...coupon, discount: parseFloat(e.target.value) })
+            }
+          />
+        </div>
+        <div>
+          <button className="btn btn-dark" onClick={saveCoupon}>
+            Save Product
+          </button>
+        </div>
       </div>
     </div>
   );

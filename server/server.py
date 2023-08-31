@@ -73,6 +73,18 @@ def save_products():
     return json.dumps(fix_id(products))
 
 
+@app.delete("/api/products/<id>")
+def delete_products(id):
+    try:
+        result = db.products.delete_one({"_id": bson.ObjectId(id)})
+        if result.deleted_count > 0:
+            return json.dumps({"message": "Document deleted successfully"})
+        else:
+            return json.dumps({"message": "Document not found"})
+    except Exception as e:
+        return json.dumps({"error": str(e)})
+
+
 @app.get("/api/products/category/<cat>")
 def get_by_category(cat):
     products = []
